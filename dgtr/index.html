@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DGTR</title>
+    <!-- Bootstrap -->
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <style>
+      body {
+        background: rgb(255, 255, 255) no-repeat fixed top left;
+        font-family: "Inter", 'Open Sans', sans-serif;
+      }
+    </style>
+
+  </head>
+
+  <!-- cover -->
+  <section>
+    <div class="jumbotron text-center mt-0">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+            <h2 style="font-size:30px;">Dexterous Grasp Transformer</h2>
+            <h4 style="color:rgb(54, 125, 189);"> CVPR 2024 </h4>
+            <hr>
+              <a href="javascript:void(0);" target="_blank">Guo-Hao Xu</a><sup> * 1</sup>&nbsp; &nbsp;
+              <a href="javascript:void(0);" target="_blank">Yi-Lin Wei</a><sup> * 1</sup> &nbsp; &nbsp;
+              <a href="https://zhengdian1.github.io/" target="_blank">Dian Zheng</a><sup>1</sup> &nbsp; &nbsp;
+              <a href="https://dravenalg.github.io/" target="_blank">Xiao-Ming Wu</a><sup>1</sup>&nbsp; &nbsp;
+              <a href="https://www.isee-ai.cn/~zhwshi/" target="_blank">Wei-Shi Zheng</a><sup> † 1, 2</sup>
+              <br>
+              <br>
+            <p>
+              <sup>1</sup> School of Computer Science and Engineering, Sun Yat-sen University, China &nbsp; &nbsp; <br>
+              <sup>2</sup> Key Laboratory of Machine Intelligence and Advanced Computing, Ministry of Education, China&nbsp; &nbsp; 
+              <br>
+            </p>
+            <p> <sup>*</sup> equal contribution &nbsp;
+              <sup>†</sup> corresponding author &nbsp;
+              <br>
+            </p>
+
+            <div class="row justify-content-center">
+              <div class="column">
+                  <p class="mb-5">
+                    <a class="btn btn-large btn-light" href="https://arxiv.org/abs/2404.18135" role="button" target="_blank">
+                    <i class="fa fa-file"></i> Paper </a>
+                  </p>
+              </div>
+              <div class="column">
+                <p class="mb-5"><a class="btn btn-large btn-light" href="./index.html" role="button" target="_blank" style="pointer-events: none">
+                  <i class="fa fa-github-alt"></i> Code (Coming soon) </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <br>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2><strong>Motivation</strong></h2>
+            <hr style="margin-top:0px">
+              <div class="row justify-content-center" style="align-items:center; display:flex;">
+                <img src="images/Motivation.png" alt="input" class="img-responsive graph" width="60%"/>
+              </div>
+              <p class="text-justify">
+                Conditional generative models may consistently generate nearly identical outputs (given the same input) at inference time due to the powerful condition, except for a diffusion-based model, which can generate diverse grasps but with low quality.
+              </p>
+              <p class="text-justify">
+                Alternatively, vanilla discriminative models can only predict a single grasp pose for one input object.
+              </p>
+              <p class="text-justify">
+                We formulate dexterous grasp generation as a set prediction task and design a transformer-based grasping model inspired by the impressive success of Detection Transformers.
+              </p>
+              <p class="text-justify">
+                However, we identify that this set prediction paradigm encounters several optimization challenges in the field of dexterous grasping.
+              </p>
+            <br>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2><strong>DGTR</strong></h2>
+          <hr style="margin-top:0px">
+          <div class="row justify-content-center" style="align-items:center; display:flex;">
+            <img src="images/Overview.png" alt="input" class="img-responsive graph" width="100%"/>
+          </div>
+          <p class="text-justify">
+            The input of DGTR is the complete point cloud $\mathcal{O}$ of an object. First, the PointNet++ encoder downsamples the point cloud and extracts a set of object features. Next, the transformer decoder takes $N$ learnable query embeddings as well as the object features as input and predicts $N$ diverse grasp poses in parallel.
+            In the dynamic matching training stage, our model is trained with the matching result produced by Hungarian Algorithm and without object penetration loss. In the static matching training stage, we use static matching recorded in the DMT stage to train the model with object penetration loss.
+            At test time, we adopt an adversarial-balanced loss to directly finetune the hand pose parameters.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <br>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2><strong>DSMT</strong></h2>
+          <hr style="margin-top:0px">
+          <p class="text-justify">
+            <strong>DMT</strong>: The matching between the predictions and the targets are dynamically generated by the Hungarian Algorithm. The object penetration loss is excluded.
+          </p>
+          <p class="text-justify">
+            <strong>SMW</strong>: The stable matching results recorded in the DMT stage are used. The object penetration loss is excluded.
+          </p>
+          <p class="text-justify">
+            <strong>SMPT</strong>: The stable matching results are still used and the object penetration loss and the hand-object distance loss are incorporated.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <br>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2><strong>AB-TTA</strong></h2>
+          <hr style="margin-top:0px">
+          <p class="text-justify">
+            <strong>Translation Moderation</strong>: Downscale the gradient of the global translation with $\beta_{t}$
+          </p>
+          <p class="text-justify">
+            <strong>TTA-distance loss</strong>: $\mathcal{L}_{tta-dist} = \sum_{i}{\mathbb{I}((d(p^{c}_{i}) < \tau) \lor (d(p^{r}_{i}) < \tau)) * d(p^{r}_{i})}$
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <br>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2><strong>Qualitative results</strong></h2>
+          <hr style="margin-top:0px">
+          <div class="row justify-content-center" style="align-items:center; display:flex;">
+            <img src="images/vis_objects.png" alt="input" class="img-responsive graph" width="100%"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+
+  <!-- citing -->
+  <div class="container">
+    <div class="row ">
+      <div class="col-12">
+          <h2><strong>Citation</strong></h2>
+          <hr style="margin-top:0px">
+              <!-- <pre style="background-color: #e9eeef;padding: 1.25em 1.5em"> -->
+<pre style="background-color: #e9eeef;padding: 0 1.5em">
+<code>
+@inproceedings{xu2024dexterous,
+  title={Dexterous Grasp Transformer},
+  author={Xu, Guo-Hao and Wei, Yi-Lin and Zheng, Dian and Wu, Xiao-Ming and Zheng, Wei-Shi},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2024}
+}
+</code>
+</pre>
+      </div>
+    </div>
+  </div>
+  <br>
+
+    <!-- Contact -->
+    <div class="container">
+      <div class="row ">
+        <div class="col-12">
+            <h2><strong>Contact</strong></h2>
+            <hr style="margin-top:0px">
+            <p>If you have any questions, please feel free to contact us:
+              <ul>
+                <li><b>Guo-Hao Xu</b>&colon; xugh23<span style="display:none">Prevent spamming</span>@<span style="display:none">Prevent spamming</span>mail2.sysu.edu.cn </li>
+                <li><b>Wei-Shi Zheng</b>&colon; wszheng<span style="display:none">Prevent spamming</span>@<span style="display:none">Prevent spamming</span>ieee.org </li>
+              </ul>
+            </p>
+        </div>
+      </div>
+    </div>
+
+
+  <footer class="text-center" style="margin-bottom:10px; font-size: medium;">
+      <hr>
+      Thanks to <a href="https://lioryariv.github.io/" target="_blank">Lior Yariv</a> for the <a href="https://lioryariv.github.io/idr/" target="_blank">website template</a>.
+  </footer>
+  <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']],
+      macros: {
+        bm: ["{\\boldsymbol #1}",1],
+      }}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</body>
+</html>
