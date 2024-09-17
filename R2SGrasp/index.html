@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>R2SGrasp</title>
+    <!-- Bootstrap -->
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <style>
+      body {
+        background: rgb(255, 255, 255) no-repeat fixed top left;
+        font-family: "Inter", 'Open Sans', sans-serif;
+      }
+    </style>
+
+  </head>
+
+  <!-- cover -->
+  <section>
+    <div class="jumbotron text-center mt-0">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+            <h2 style="font-size:30px;">Real-to-Sim Grasp: Rethinking the Gap between Simulation and Real World in Grasp Detection</h2>
+            <h4 style="color:rgb(54, 125, 189);"> CoRL 2024 </h4>
+            <hr>
+              <a href="javascript:void(0);" target="_blank">Jia-Feng Cai</a><sup> 1</sup>&nbsp; &nbsp;
+              <a href="javascript:void(0);" target="_blank">Zibo Chen</a><sup> 1</sup> &nbsp; &nbsp;
+              <a href="https://dravenalg.github.io/" target="_blank">Xiao-Ming Wu</a><sup>1</sup> &nbsp; &nbsp;
+              <a href="javascript:void(0);" target="_blank">Jian-Jian Jiang</a><sup>1</sup>&nbsp; &nbsp;
+              <a href="https://wyl2077.github.io/" target="_blank">Yi-Lin Wei</a><sup>1</sup>&nbsp; &nbsp;
+              <a href="https://www.isee-ai.cn/~zhwshi/" target="_blank">Wei-Shi Zheng</a><sup> † 1, 2</sup>
+              <br>
+              <br>
+            <p>
+              <sup>1</sup> School of Computer Science and Engineering, Sun Yat-sen University, China &nbsp; &nbsp; <br>
+              <sup>2</sup> Key Laboratory of Machine Intelligence and Advanced Computing, Ministry of Education, China&nbsp; &nbsp; 
+              <br>
+            </p>
+            <p>
+              <sup>†</sup> corresponding author &nbsp;
+              <br>
+            </p>
+
+            <div class="row justify-content-center">
+              <div class="column">
+                  <p class="mb-5">
+                    <a class="btn btn-large btn-light" href="https://openreview.net/pdf?id=uJBMZ6S02T" role="button" target="_blank">
+                    <i class="fa fa-file"></i> Paper </a>
+                  </p>
+              </div>
+              <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="./index.html" role="button" target="_blank" style="pointer-events: none">
+                  <i class="fa fa-github-alt"></i> Code (Coming soon) </a>
+                </p>
+              </div>
+              <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="./index.html" role="button" target="_blank">
+                  <i class="fa fa-file"></i> Dataset (Coming soon) </a>
+                </p>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="video-section">
+    <iframe class="video-container" src="https://www.youtube.com/embed/wkFbOyvn7xQ?autoplay=1&mute=1&loop=1&controls=1"
+            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </section>
+  
+  
+  <br>
+  <br>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2><strong>Abstract</strong></h2>
+            <hr style="margin-top:0px">
+              <div class="row justify-content-center" style="align-items:center; display:flex;"></div>
+                <img src="images/motivation.png" alt="input" class="img-responsive graph" width="100%"/>
+              </div>
+              <p class="text-justify" >
+                For 6-DoF grasp detection, simulated data is expandable to train more powerful model, 
+                but it faces the challenge of the large gap between simulation and real world. 
+                Previous works bridge this gap with a sim-to-real way. However, this way explicitly or implicitly 
+                forces the simulated data to adapt to the noisy real data when training grasp detectors, 
+                where the positional drift and structural distortion within the camera noise will harm the grasp learning. 
+                In this work, we propose a Real-to-Sim framework for 6-DoF Grasp detection, named R2SGrasp,
+                with the key insight of bridging this gap in a real-to-sim way, which directly bypasses the camera noise in grasp detector training 
+                through an inference-time real-to-sim adaption. To achieve this real-to-sim adaptation, 
+                our R2SGrasp designs the Real-to-Sim Data Repairer (R2SRepairer) to mitigate the camera noise of real depth maps in data-level, 
+                and the Real-to-Sim Feature Enhancer (R2SEnhancer) to enhance real features with precise simulated geometric primitives in feature-level. 
+                To endow our framework with the generalization ability, we construct a large-scale simulated dataset cost-efficiently to train our grasp detector, 
+                which includes 64,000 RGB-D images with 14.4 million grasp annotations. 
+                Sufficient experiments show that R2SGrasp is powerful and our real-to-sim perspective is effective. 
+                To our knowledge, we are the first using simulated data to surpass the methods trained with real-world data in 6-DoF grasping. 
+                The real-world experiments also show great generalization ability of R2SGrasp.
+              </p>
+
+            <br>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2><strong>R2SGrasp framework</strong></h2>
+          <hr style="margin-top:0px">
+          <p class="text-justify">
+            Real-to-sim way is able to train a robust grasp detector on noiseless simulated data to avoid the interference of noise in grasping skills learning, 
+            thereby achieving stronger grasping capabilities. To apply the precise grasping ability learned from simulation to the real world, the R2SGrasp framework, 
+            including a Real-to-Sim Data Repairer (R2SRepairer) and a Real-to-Sim Feature Enhancer (R2SEnhancer) is designed to achieve real-to-sim adaptation at data and feature level respectively.
+          </p>
+          <div class="row justify-content-center" style="align-items:center; display:flex;">
+            <img src="images/Overview.png" alt="input" class="img-responsive graph" width="100%"/>
+          </div>
+          <p class="text-justify">
+            In inference phase, R2SRepairer repairs depth map from RGB-D input, then a feature extractor extracts local features from the single-view point cloud
+            which is transformed from the repaired depth map. Then R2SEnhancer enhances the real features using the stored simulated structural features 
+            and finally predicts the grasp poses. In training phase, we train the R2SRepairer on twin datasets and train the grasp detector with R2SEnhancer 
+            on our R2Sim dataset.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <br>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2><strong>R2Sim Dataset</strong></h2>
+          <hr style="margin-top:0px">
+          <div class="gif-row">
+            <img src="images/0_colors_animation.gif" alt="GIF 1" class="gif">
+            <img src="images/1_colors_animation.gif" alt="GIF 2" class="gif">
+            <img src="images/2_colors_animation.gif" alt="GIF 3" class="gif">
+            <img src="images/3_colors_animation.gif" alt="GIF 4" class="gif">
+            <img src="images/4_colors_animation.gif" alt="GIF 5" class="gif">
+          </div>
+          <div class="gif-row">
+            <img src="images/5_colors_animation.gif" alt="GIF 6" class="gif">
+            <img src="images/6_colors_animation.gif" alt="GIF 7" class="gif">
+            <img src="images/7_colors_animation.gif" alt="GIF 8" class="gif">
+            <img src="images/10_colors_animation.gif" alt="GIF 5" class="gif">
+            <img src="images/9_colors_animation.gif" alt="GIF 5" class="gif">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <br>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2><strong>Real world experiments</strong></h2>
+          <hr style="margin-top:0px">
+          <div class="video-row">
+            <iframe class="video" src="https://www.youtube.com/embed/Ijzrp0XLILU?autoplay=1&mute=1&loop=1&controls=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe class="video" src="https://www.youtube.com/embed/2RMTg1GkD6U?autoplay=1&mute=1&loop=1&controls=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe class="video" src="https://www.youtube.com/embed/icz5w6s_h4I?autoplay=1&mute=1&loop=1&controls=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+
+  <!-- Contact -->
+  <div class="container">
+    <div class="row ">
+      <div class="col-12">
+          <h2><strong>Contact</strong></h2>
+          <hr style="margin-top:0px">
+          <p>If you have any questions, please feel free to contact us:
+            <ul>
+              <li><b>Jia-Feng Cai</b>&colon; caijf23<span style="display:none">Prevent spamming</span>@<span style="display:none">Prevent spamming</span>mail2.sysu.edu.cn </li>
+              <li><b>Wei-Shi Zheng</b>&colon; wszheng<span style="display:none">Prevent spamming</span>@<span style="display:none">Prevent spamming</span>ieee.org </li>
+            </ul>
+          </p>
+      </div>
+    </div>
+  </div>
+
+
+  <footer class="text-center" style="margin-bottom:10px; font-size: medium;">
+      <hr>
+      Thanks to <a href="https://lioryariv.github.io/" target="_blank">Lior Yariv</a> for the <a href="https://lioryariv.github.io/idr/" target="_blank">website template</a>.
+  </footer>
+  <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']],
+      macros: {
+        bm: ["{\\boldsymbol #1}",1],
+      }}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</body>
+</html>
