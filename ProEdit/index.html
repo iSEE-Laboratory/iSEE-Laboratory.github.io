@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ProEdit: Inversion-based Editing From Prompts Done Right</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Analytics，可要可不要 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y5ZVQZ7NHC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-Y5ZVQZ7NHC');
+  </script>
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+
+  <link rel="stylesheet" href="./assets/proedit/css/index.css">
+
+
+  <link rel="stylesheet" href="./assets/proedit/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+
+  <link rel="stylesheet"
+        href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
+  <style>
+    a.jx-knightlab div.knightlab-logo,
+    a.jx-knightlab span.juxtapose-name {
+      display: none !important;
+      visibility: hidden !important;
+    }
+  </style>
+  <script src="https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js"></script>
+
+  <style>
+    .juxtapose {
+      max-width: 100%;
+      margin-bottom: 1rem;
+    }
+    .juxtapose img {
+      max-height: 260px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================= title ================= -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            <span style="color:#B9770E; font-weight: bold; font-style: italic">ProEdit</span> :
+            Inversion-based Editing From Prompts Done Right
+          </h1>
+          
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Dec 2025</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://github.com/ouyangzhi1" target="_blank">Zhi Ouyang</a><sup>1*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://zhengdian1.github.io" target="_blank">Dian Zheng</a><sup>2*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://dravenalg.github.io" target="_blank">Xiao-Ming Wu</a><sup>3</sup>,
+            </span>
+            <br>
+            <span class="author-block">
+              <a href="https://jianjian-jiang.github.io" target="_blank">Jian-Jian Jiang</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://kunyulin.github.io" target="_blank">Kun-Yu Lin</a><sup>4</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://isee-ai.cn/~mengjingke/" target="_blank">Jingke Meng</a><sup>1&#8224</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.isee-ai.cn/~zhwshi/" target="_blank">Wei-Shi Zheng</a><sup>1,5&#8224</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">(* equal contributions, &#8224 corresponding authors)</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <sup>1</sup> Sun Yat-sen University &nbsp;&nbsp;
+              <sup>2</sup> CUHK MMLab &nbsp;&nbsp;
+              <br>
+              <sup>3</sup> College of Computing and Data Science, Nanyang Technological University &nbsp;&nbsp;
+              <br>
+              <sup>4</sup> The University of Hong Kong &nbsp;&nbsp;
+              <br>
+              <sup>5</sup> Key Laboratory of Machine Intelligence and Advanced Computing, Ministry of Education, China
+            </span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2512.22118" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=eDF3x-gyNCA" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/iSEE-Laboratory/ProEdit" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>GitHub</span>
+                </a>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= teaser ================= -->
+<section class="hero teaser">
+  <div class="container is-max-desktop" style="width: 50%; max-width: none;">
+    <div class="hero-body">
+      <img src="assets/proedit/images/teaser.jpg"
+           style="width:100%; margin-bottom:10px" alt="Teaser."/>
+      <p style="margin-top: 0;">
+        <b>Overview of ProEdit.</b>
+        We propose a highly accurate, plug-and-play editing method for flow inversion that addresses the problem of excessive source image information injection, which prevents proper modification of attributes such as pose, number, and color. Our method has demonstrated impressive performance in both image editing and video editing tasks.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Paper video. -->
+<section class="hero is-light">
+  <div class="columns is-centered has-text-centered"  style="margin-top: 0px; margin-bottom: 10px;">
+    <div class="column is-three-fifths">
+      <h2 class="title is-3">Video</h2>
+      <div class="publication-video">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/eDF3x-gyNCA?si=fF9dVk8kWoaqbew0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- / Paper video.   -->
+
+<!-- ================= Abstract ================= -->
+<section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered" style="margin-top: 10px; margin-bottom: 0px;">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 is-centered">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Inversion-based visual editing provides an effective and training-free way to edit an image or a video based on user instructions. Existing methods typically inject source image information during the sampling process to maintain editing consistency. However, this sampling strategy overly relies on source information, which negatively affects the edits in the target image (e.g., failing to change the subject's atributes like pose, number, or color as instructed).
+            In this work, we propose <b>ProEdit</b> to address this issue both in the attention and the latent aspects.
+            In the attention aspect, we introduce <b>KV-mix</b>, which mixes KV features of the source and the target in the edited region, mitigating the influence of the source image on the editing region while maintaining background consistency. 
+            In the latent aspect, we propose <b>Latents-Shift</b>, which perturbs the edited region of the source latent, eliminating the influence of the inverted latent on the sampling.
+            Extensive experiments on several image and video editing benchmarks demonstrate that our method achieves SOTA performance. In addition, our design is plug-and-play, which can be seamlessly integrated into existing inversion and editing methods, such as RF-Solver, FireFlow and UniEdit.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Motivation ================= -->
+<section class="section" style="margin-top:-100px; margin-bottom:-50px;">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div class="section-title">
+        <h2 class="title is-3 is-centered">
+          Excessive source image information injection phenomeno in RF-Solver
+        </h2>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+          <div class="publication-img">
+            <img id="architecture"
+                 src="assets/proedit/images/motivation.jpg"
+                 style="width:1500px; margin-top:10px;margin-bottom:10px;"/>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top: 0;">
+        We validate it by visualizing the attention from source and target text tokens to the visual tokens during initial and sampling stage. In RF-Solver, the attention from the source text token to the visual tokens remains higher than that from the target text token. However, after removing attention injection, the attention from ''black'' and ''orange'' to visual tokens returns to similar levels, but some subject attributes (e.g., pose) change accordingly.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Pipeline ================= -->
+<section class="section" style="margin-top:-100px; margin-bottom:-50px;">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div class="section-title">
+        <h2 class="title is-3 is-centered">Pipeline of ProEdit</h2>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+          <div class="publication-img">
+            <img id="architecture"
+                 src="assets/proedit/images/pipeline.jpg"
+                 style="width:1500px; margin-top:10px;margin-bottom:10px;"/>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top: 0;">
+        <b>Pipeline of our ProEdit.</b> The mask extraction module identifies the edited region based on source and target prompts during the first inversion step. After obtaining the inverted noise, we apply Latents-Shift to perturb the initial distribution in the edited region, reducing source image information. In selected sampling steps, we fuse source and target attention features in the edited region while directly injecting source features in non-edited regions to achieve accurate attribute editing and background preservation simultaneously.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Text-driven Image / Video Editing ================= -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <h2 class="title is-3">Text-driven Image / Video Editing</h2>
+      
+      <p class="has-text-centered">
+        <strong class="is-size-4">FLUX 🎨 Flow-based Image Generation Model</strong>
+      </p>
+      <br>
+
+      <div class="columns is-centered">
+        <div class="column">
+          <p class="has-text-centered">
+            <strong class="is-size-6">Background: Trees &#10145 Mountain</strong>
+          </p>
+          <div id="slider-background" class="juxtapose"></div>
+        </div>
+
+        <div class="column">
+          <p class="has-text-centered">
+            <strong class="is-size-6">&#8722 Mint Leaves</strong>
+          </p>
+          <div id="slider-mint" class="juxtapose"></div>
+        </div>
+
+        <div class="column">
+          <p class="has-text-centered">
+            <strong class="is-size-6">&#43 Reading Book</strong>
+          </p>
+          <div id="slider-squirrel" class="juxtapose"></div>
+        </div>
+      </div>
+
+
+      <div class="columns is-centered">
+        <div class="column">
+          <p class="has-text-centered">
+            <strong class="is-size-6"><span style="color:#FFC0CB;">Umbrella</span> &#10145 <span style="color:#DAA520;">Umbrella</span></strong>
+          </p>
+          <div id="slider-umbrella" class="juxtapose"></div>
+        </div>
+
+        <div class="column">
+          <p class="has-text-centered">
+            <strong class="is-size-6">Bench &#10145 Sofa</strong>
+          </p>
+          <div id="slider-sofa" class="juxtapose"></div>
+        </div>
+
+        <div class="column">
+          <p class="has-text-centered">
+            <strong class="is-size-6">Tiger &#10145 Cat</strong>
+          </p>
+          <div id="slider-cat" class="juxtapose"></div>
+        </div>
+      </div>
+      
+
+
+      <div class="columns is-centered">
+        <div class="column">
+          <p class="has-text-centered">
+            <strong class="is-size-6">Cat &#10145 Fox</strong>
+          </p>
+          <div id="slider-fox" class="juxtapose"></div>
+        </div>
+
+        <div class="column">
+          <p class="has-text-centered">
+            <strong class="is-size-6">Shirt &#10145 Sweater</strong>
+          <div id="slider-sweater" class="juxtapose"></div>
+        </div>
+
+        <div class="column">
+          <p class="has-text-centered">
+            <strong class="is-size-6">Cat &#10145 Dog</strong>
+          </p>
+          <div id="slider-dog" class="juxtapose"></div>
+        </div>
+      </div>
+
+      <p class="has-text-centered">
+        <strong class="is-size-4">HunyuanVideo 🎥 Flow-based Video Generation Model</strong>
+      </p>
+      <br>
+
+      <div class="columns is-centered">
+        <div class="column">
+          <p class="has-text-centered">
+            <strong class="is-size-6">&#43 Roof Rack</strong>
+          </p>
+          <div id="video-car1" class="juxtapose"></div>
+        </div>
+
+        <div class="column">
+          <p class="has-text-centered">
+            <strong class="is-size-6">&#43 Crown</strong>
+          <div id="video-cat" class="juxtapose"></div>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column">
+          <p class="has-text-centered">
+            <strong class="is-size-6">Red Car &#10145 Black Car</strong>
+          </p>
+          <div id="video-car2" class="juxtapose"></div>
+        </div>
+
+        <div class="column">
+          <p class="has-text-centered">
+            <strong class="is-size-6">Deer &#10145 Cow</strong>
+          <div id="video-deer" class="juxtapose"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<br>
+
+<!-- ================= Editing By Instruction ================= -->
+<section class="section" style="margin-top:-100px; margin-bottom:-50px;">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div class="section-title">
+        <h2 class="title is-3 is-centered">Editing By Instruction</h2>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+          <div class="publication-img">
+            <img id="architecture"
+                 src="assets/proedit/images/editing_instruction.jpg"
+                 style="width:1600px; margin-top:10px;margin-bottom:10px;"/>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top: 0;">
+        <b>Qualitative results of image editing based on editing instruction.</b> To lower the barrier for using our method and make it more user-friendly, we introduce a large language model Qwen3-8B to enable editing based on editing instruction. The actual input editing instruction are shown above each
+        source image and its corresponding edited image.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BibTeX ================= -->
+<section class="hero is-light is-small" id="BibTeX">
+  <div class="container is-max-desktop content" style="margin-top: 40px; margin-bottom: 20px;">
+    <h2 class="title">BibTeX</h2>
+    <p>If you find our work useful, please consider citing our paper:</p>
+    <pre><code>@misc{ouyang2025proedit,
+  title={ProEdit: Inversion-based Editing From Prompts Done Right},
+  author={Ouyang, Zhi and Zheng, Dian and Wu, Xiao-Ming and Jiang, Jian-Jian and Lin, Kun-Yu and Meng, Jingke and Zheng, Wei-Shi},
+  year={2025},
+  eprint={2512.22118}
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2512.22118}
+}</code></pre>
+  </div>
+</section>
+
+<!-- ================= footer ================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="https://arxiv.org/pdf/2512.22118">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link"
+         href="https://github.com/iSEE-Laboratory/ProEdit"
+         class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a
+            <a rel="license"
+               href="http://creativecommons.org/licenses/by-sa/4.0/">
+              Creative Commons Attribution-ShareAlike 4.0 International License
+            </a>.
+          </p>
+          <p>
+            Website source code based on the
+            <a href="https://nerfies.github.io/">Nerfies</a> project page. If you want to reuse their
+            <a href="https://github.com/nerfies/nerfies.github.io">source code</a>,
+            please credit them appropriately.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ 初始化 Juxtapose，对比滑块部分（照 demo 来） ============ -->
+<script>
+  window.addEventListener('load', function () {
+    // 第 1 个滑块
+    new juxtapose.JXSlider('#slider-background', [
+      {
+        src: './assets/proedit/images/image_editing/1/812000000000.jpg',
+        label: 'Source'
+      },
+      {
+        src: './assets/proedit/images/image_editing/1/812000000000_ours.jpg',
+        label: 'ProEdit'
+      }
+    ], {
+      startingPosition: '30%',
+      showLabels: true,
+      animate: true
+    });
+
+    // 第 2 个滑块
+    new juxtapose.JXSlider('#slider-mint', [
+      {
+        src: './assets/proedit/images/image_editing/2/323000000001.jpg',
+        label: 'Source'
+      },
+      {
+        src: './assets/proedit/images/image_editing/2/323000000001_ours.jpg',
+        label: 'ProEdit'
+      }
+    ], {
+      startingPosition: '30%',
+      showLabels: true,
+      animate: true
+    });
+
+    // 第 3 个滑块
+    new juxtapose.JXSlider('#slider-squirrel', [
+      {
+        src: './assets/proedit/images/image_editing/3/221000000008.jpg',
+        label: 'Source'
+      },
+      {
+        src: './assets/proedit/images/image_editing/3/221000000008_ours.jpg',
+        label: 'ProEdit'
+      }
+    ], {
+      startingPosition: '30%',
+      showLabels: true,
+      animate: true
+    });
+
+    // 第 4 个滑块
+    new juxtapose.JXSlider('#slider-umbrella', [
+      {
+        src: './assets/proedit/images/image_editing/4/612000000003.jpg',
+        label: 'Source'
+      },
+      {
+        src: './assets/proedit/images/image_editing/4/612000000003_ours.jpg',
+        label: 'ProEdit'
+      }
+    ], {
+      startingPosition: '30%',
+      showLabels: true,
+      animate: true
+    });
+
+    // 第 5 个滑块
+    new juxtapose.JXSlider('#slider-sofa', [
+      {
+        src: './assets/proedit/images/image_editing/5/122000000005.jpg',
+        label: 'Source'
+      },
+      {
+        src: './assets/proedit/images/image_editing/5/122000000005_ours.jpg',
+        label: 'ProEdit'
+      }
+    ], {
+      startingPosition: '30%',
+      showLabels: true,
+      animate: true
+    });
+
+    // 第 6 个滑块
+    new juxtapose.JXSlider('#slider-cat', [
+      {
+        src: './assets/proedit/images/image_editing/6/000000000019.jpg',
+        label: 'Source'
+      },
+      {
+        src: './assets/proedit/images/image_editing/6/000000000019_ours.jpg',
+        label: 'ProEdit'
+      }
+    ], {
+      startingPosition: '30%',
+      showLabels: true,
+      animate: true
+    });
+
+    // 第 7 个滑块
+    new juxtapose.JXSlider('#slider-fox', [
+      {
+        src: './assets/proedit/images/image_editing/7/000000000080.jpg',
+        label: 'Source'
+      },
+      {
+        src: './assets/proedit/images/image_editing/7/000000000080_ours.jpg',
+        label: 'ProEdit'
+      }
+    ], {
+      startingPosition: '30%',
+      showLabels: true,
+      animate: true
+    });
+
+    // 第 8 个滑块
+    new juxtapose.JXSlider('#slider-sweater', [
+      {
+        src: './assets/proedit/images/image_editing/8/shirt.jpg',
+        label: 'Source'
+      },
+      {
+        src: './assets/proedit/images/image_editing/8/sweater.jpg',
+        label: 'ProEdit'
+      }
+    ], {
+      startingPosition: '30%',
+      showLabels: true,
+      animate: true
+    });
+
+    // 第 9 个滑块
+    new juxtapose.JXSlider('#slider-dog', [
+      {
+        src: './assets/proedit/images/image_editing/9/000000000002.jpg',
+        label: 'Source'
+      },
+      {
+        src: './assets/proedit/images/image_editing/9/000000000002_ours.jpg',
+        label: 'ProEdit'
+      }
+    ], {
+      startingPosition: '30%',
+      showLabels: true,
+      animate: true
+    });
+
+    new juxtapose.JXSlider('#video-car1', [
+      {
+        src: './assets/proedit/images/video_editing/car/car_1.gif',
+        label: 'Source'
+      },
+      {
+        src: './assets/proedit/images/video_editing/car/edit_car_1.gif',
+        label: 'ProEdit'
+      }
+    ], {
+      startingPosition: '30%',
+      showLabels: true,
+      animate: true
+    });
+
+    new juxtapose.JXSlider('#video-cat', [
+      {
+        src: './assets/proedit/images/video_editing/cat/cat.gif',
+        label: 'Source'
+      },
+      {
+        src: './assets/proedit/images/video_editing/cat/edit_cat.gif',
+        label: 'ProEdit'
+      }
+    ], {
+      startingPosition: '30%',
+      showLabels: true,
+      animate: true
+    });
+
+    new juxtapose.JXSlider('#video-car2', [
+      {
+        src: './assets/proedit/images/video_editing/car_2/car_2.gif',
+        label: 'Source'
+      },
+      {
+        src: './assets/proedit/images/video_editing/car_2/edit_car_2.gif',
+        label: 'ProEdit'
+      }
+    ], {
+      startingPosition: '30%',
+      showLabels: true,
+      animate: true
+    });
+
+    new juxtapose.JXSlider('#video-deer', [
+      {
+        src: './assets/proedit/images/video_editing/deer/deer.gif',
+        label: 'Source'
+      },
+      {
+        src: './assets/proedit/images/video_editing/deer/edit_deer.gif',
+        label: 'ProEdit'
+      }
+    ], {
+      startingPosition: '30%',
+      showLabels: true,
+      animate: true
+    });
+  });
+</script>
+
+</body>
+</html>
