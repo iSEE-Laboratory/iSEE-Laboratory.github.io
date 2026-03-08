@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="ReViP: Mitigating False Completion in Vision-Language-Action Models with Vision-Proprioception Rebalance">
+  <meta name="keywords" content="Robotics, Vision-Language-Action(VLA), False Completion, Manipulation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ReViP</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js" defer></script>
+  <script src="./static/js/bulma-slider.min.js" defer></script>
+  <script src="./static/js/index.js" defer></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+<div style="width: 100%; text-align: center; margin-bottom: 18px;">
+  <div
+    style="
+      display: inline-block;
+      position: relative;
+      padding-left: 52px;
+      max-width: 100%;
+      box-sizing: border-box;
+    "
+  >
+    <img
+      src="./static/images/icon.png"
+      alt="icon"
+      style="
+        width: 45px;
+        height: 45px;
+        object-fit: contain;
+        position: absolute;
+        left: 45px;
+        top: 22px;
+        transform: translateY(-50%);
+      "
+    >
+    <h1
+      class="title is-1 publication-title"
+      style="
+        margin: 0;
+        line-height: 1.5;
+        text-align: center;
+      "
+    >
+      <span style="color: #ED7D31;">ReViP</span>: Mitigating False Completion in Vision-Language-Action Models with Vision-Proprioception Rebalance
+    </h1>
+  </div>
+</div>
+          <div class="is-size-4 publication-authors">
+            <span class="author-block"><a href="https://github.com/lizhh268Zhuohao">Zhuohao Li</a><sup>1,2</sup>,</span>
+            <span class="author-block">Yinghao Li</a><sup>1,2</sup>,</span>
+            <span class="author-block"><a href="https://jianjian-jiang.github.io/">Jian-Jian Jiang</a><sup>1</sup>,</span>
+            <span class="author-block">Lang Zhou</a><sup>1,2</sup>,</span>
+            <span class="author-block">Tianyu Zhang</a><sup>3,2</sup>,</span>
+            <span class="author-block">Jiadong Yin</a><sup>1</sup>,</span>
+            <span class="author-block">Mu Lin</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://wyl2077.github.io/">Yi-Lin Wei</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://www.isee-ai.cn/~zhwshi/">Wei-Shi Zheng</a><sup>1,4,5,6,†</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Sun Yat-sen University,</span>
+            <span class="author-block"><sup>2</sup>Shenzhen Loop Area Institute,</span>
+            <span class="author-block"><sup>3</sup>Beijing Institute of Technology,</span>
+            <span class="author-block"><sup>4</sup>Peng Cheng Laboratory</span>
+            <span class="author-block"><sup>5</sup>Key Laboratory of Machine Intelligence and Advanced Computing, Ministry of Education,</span>
+            <span class="author-block"><sup>6</sup>Guangdong Province Key Laboratory of Information Security Technology</span>
+          </div>
+          <div class="is-size-6" style="margin-top: 8px;">
+             <span class="author-block"><sup>†</sup>Corresponding author</span>
+          </div>
+          <div class="is-size-6" style="margin-top: 8px;">
+            <span class="author-block"><strong>Contact:</strong> lizhh268@mail2.sysu.edu.cn</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2601.16667"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2601.16667"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon)</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video autoplay muted loop playsinline controls style="width: 100%; display: block; margin: 0 auto; border-radius: 12px;">
+        <source src="./static/demo/demo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <h2 class="subtitle has-text-centered" style="margin-top: 20px;">
+        <strong>ReViP</strong> identifies <strong>false completion</strong> as a critical failure mode in VLA models and diagnoses it, benchmarks it (the <strong>first False-Completion benchmark suite</strong>), and then mitigates it with <strong>rebalancing vision and proprioception</strong> in both simulation and real-world settings.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Vision-Language-Action (VLA) models have advanced robotic manipulation by combining vision, language, and proprioception to predict actions. 
+            However, previous methods fuse proprioceptive signals directly with vision-language features, resulting in state-dominant bias and <strong>false completion</strong> despite visible execution failures. 
+            We systematically analyze this failure mode, attributing it to modality imbalance, where policies overly rely on internal state progression and underuse visual evidence. 
+          </p>
+          <p>
+            To address this, we introduce the <strong>first False-Completion Benchmark Suite</strong>, featuring eight tasks with three controlled perturbations (Object Drop, Distractor Swap, Relayout) to comprehensively evaluate false completion.
+          </p>
+          <p>
+            Moreover, we propose <strong>ReViP</strong>, a novel VLA framework with <strong>Vi</strong>sion-<strong>P</strong>roprioception <strong>Re</strong>balance to enhance visual grounding and robustness under perturbations. 
+            The key insight is to introduce auxiliary progress-aware visual cues to adaptively modulate the coupling between semantic perception and proprioceptive dynamics. 
+            Specifically, progress-aware visual cues are extracted by an external Task-Stage Observer, which performs task-relevant reasoning on real-time observations to drive task-stage feature-wise linear modulation, enhancing environmental awareness and mitigating state-driven errors. 
+          </p>
+            Extensive experiments show that ReViP effectively mitigates false completion and improves success rates over strong VLA baselines, achieving a <strong>26%</strong> gain over π0 model on our suite, with gains extending to LIBERO, RoboTwin 2.0, and real-world evaluations.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Motivation: "False Completion" in VLA models</h2>
+    <br>
+      <h2 class="subtitle has-text-centered">
+       ReViP highlights a failure mode that existing VLA evaluation often misses: a robot can look "done" internally while the world clearly shows that the task has not been completed. (The Three visualizations below are the results generated by the π0 model.)
+      </h2>
+    
+    <div class="columns is-multiline is-centered" style="align-items: flex-start;">
+      <div class="column is-one-quarter">
+        <div class="content has-text-centered">
+          <video autoplay muted loop playsinline controls style="width: 100%; height: 300px; object-fit: cover;">
+            <source src="./static/video/bsl_problem/butter.mp4" type="video/mp4">
+          </video>
+        <p style="font-size: 0.9em; margin-top: 8px;">
+          <span style="color: red; margin-right: 4px;">✕</span><strong>No Back to Oject</strong><br>&nbsp Butter->Baket
+        </p>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="content has-text-centered">
+          <video autoplay muted loop playsinline controls style="width: 100%; height: 300px; object-fit: cover;">
+            <source src="./static/video/bsl_problem/orange_juice.mp4" type="video/mp4">
+          </video>
+          <p style="font-size: 0.9em; margin-top: 8px;">
+            <span style="color: red; margin-right: 4px;">✕</span><strong>No Back to Oject</strong><br>&nbsp Orang Juice->Baket
+          </p>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="content has-text-centered">
+          <video autoplay muted loop playsinline controls style="width: 100%; height: 300px; object-fit: cover;">
+            <source src="./static/video/bsl_problem/cream_cheese.mp4" type="video/mp4">
+          </video>
+         <p style="font-size: 0.9em; margin-top: 8px;">
+            <span style="color: red; margin-right: 4px;">✕</span><strong>No Back to Oject</strong><br>&nbsp Cream Cheese->Baket
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h3 class="title is-3 has-text-centered">False-Completion Benchmark Suite</h3>
+    <h2 class="subtitle has-text-centered">
+      To our knowledge, this is the first benchmark suite built specifically for false completion in VLA models, covering <strong>8 tasks</strong> and <strong>3 controlled perturbation families</strong>.
+    </h2>
+
+    <div class="columns is-vcentered">
+      <div class="column is-5">
+        <div style="display: flex; justify-content: center;">
+          <img
+            src="./static/images/FC.png"
+            alt="False-Completion Benchmark"
+            style="width: 100%; max-width: 420px; border-radius: 12px;"
+            loading="eager"
+          />
+        </div>
+      </div>
+
+      <div class="column is-7">
+        <div class="box" style="margin-bottom: 16px;">
+          <p style="font-size: 2rem; font-weight: 700; color: #7100f2;">Object Drop</p>
+          <p>Tests whether a model can detect unexpected execution-time failure, recover the object, and regrasp instead of blindly continuing the original plan.</p>
+        </div>
+
+        <div class="box" style="margin-bottom: 16px;">
+          <p style="font-size: 2rem; font-weight: 700; color: #F29900;">Distractor Swap</p>
+          <p>Stresses instance-level visual grounding by swapping target and distractor poses while keeping language fixed.</p>
+        </div>
+
+        <div class="box">
+          <p style="font-size: 2rem; font-weight: 700; color: #1A73E8;">Relayout</p>
+          <p>Breaks demonstration-specific spatial priors and requires policies to adapt to new target-goal layouts from current visual observations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="title is-3 has-text-centered">Method</h2>
+      <h2 class="subtitle has-text-centered">
+        ReViP introduces a <strong>Task-Stage Observer</strong> which performs task-relevant reasoning to extract <strong>progress-aware visual cues</strong> and a <strong>Task-Stage Enhancer</strong> to inject them back into the VLA backbone, adaptively rebalancing visual grounding and proprioceptive dynamics.
+      </h2>
+      <div style="display: flex; justify-content: center;">
+        <img src="./static/images/ReViP.png" alt="ReViP method overview" style="width: 82%; border-radius: 12px;" loading="eager"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Simulation Benchmark Section -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h3 class="title is-3 has-text-centered">Simulation Benchmark Visualization</h3>
+      <br>
+
+    <div class="columns is-multiline is-centered">
+      <!-- Row 1 -->
+      <div class="column is-one-quarter">
+        <div class="content has-text-centered">
+          <video autoplay muted loop playsinline controls style="width: 60%;">
+            <source src="./static/video/simulation_benchmark/butter.mp4" type="video/mp4">
+          </video>
+          <p style="font-size: 0.9em; margin-top: 8px;"><strong>Object Drop</strong><br>&nbsp Butter->Baket</p>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="content has-text-centered">
+          <video autoplay muted loop playsinline controls style="width: 60%;">
+            <source src="./static/video/simulation_benchmark/butter2.mp4" type="video/mp4">
+          </video>
+          <p style="font-size: 0.9em; margin-top: 8px;"><strong>Distractor Swap</strong><br>&nbsp Butter->Baket</p>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="content has-text-centered">
+          <video autoplay muted loop playsinline controls style="width: 60%;">
+            <source src="./static/video/simulation_benchmark/salad.mp4" type="video/mp4">
+          </video>
+          <p style="font-size: 0.9em; margin-top: 8px;"><strong>Object Drop</strong><br>&nbsp Salad dressing->Baket</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Real-World Benchmark Section -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h3 class="title is-3 has-text-centered">Real-World Task Visualization</h3>
+      <br>
+
+    <div class="columns is-multiline is-centered">
+      <!-- Row 1 -->
+      <div class="column is-one-quarter">
+        <div class="content has-text-centered">
+          <video autoplay muted loop playsinline controls style="width: 100%;">
+            <source src="./static/video/realworld_benchmark/drop.mp4" type="video/mp4">
+          </video>
+          <p style="font-size: 0.9em; margin-top: 8px;"><strong>Object Drop</strong></p>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="content has-text-centered">
+          <video autoplay muted loop playsinline controls style="width: 100%;">
+            <source src="./static/video/realworld_benchmark/1-1.mp4" type="video/mp4">
+          </video>
+          <p style="font-size: 0.9em; margin-top: 8px;"><strong>Similar Distractor</strong></p>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="content has-text-centered">
+          <video autoplay muted loop playsinline controls style="width: 100%;">
+            <source src="./static/video/realworld_benchmark/2-1.mp4" type="video/mp4">
+          </video>
+          <p style="font-size: 0.9em; margin-top: 8px;"><strong>Small-Object Distractor</strong></p>
+        </div>
+      </div>
+            <div class="column is-one-quarter">
+        <div class="content has-text-centered">
+          <video autoplay muted loop playsinline controls style="width: 100%;">
+            <source src="./static/video/realworld_benchmark/3-1.mp4" type="video/mp4">
+          </video>
+          <p style="font-size: 0.9em; margin-top: 8px;"><strong>Long-Horizon Task</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="title is-3 has-text-centered">Experiments</h2>
+      <div style="display: flex; justify-content: center;">
+        <img src="./static/images/res_fc.png" alt="ReViP results" style="width: 82%; border-radius: 12px;" loading="eager"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{li2026revip,
+  author  = {Zhuohao Li and Yinghao Li and Jian-Jian Jiang and Lang Zhou and Tianyu Zhang and Jiadong Yin and Mu Lin and Yi-Lin Wei and Wei-Shi Zheng},
+  title   = {ReViP: Mitigating False Completion in Vision-Language-Action Models with Vision-Proprioception Rebalance},
+  journal = {arXiv preprint arXiv:2601.16667},
+  year    = {2026}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="https://arxiv.org/pdf/2601.16667">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="#" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+
+
