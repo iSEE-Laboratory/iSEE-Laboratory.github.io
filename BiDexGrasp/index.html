@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="BiDexGrasp: Coordinated Bimanual Dexterous Grasps across Object Geometries and Sizes. Accepted to CoRL 2026 as a Spotlight paper.">
+  <meta name="keywords" content="BiDexGrasp, bimanual dexterous grasping, robotics, CoRL 2026, Spotlight">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BiDexGrasp | CoRL 2026 Spotlight</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero is-fullheight paper-hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-head">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="container is-max-widescreen">
+        <div class="navbar-brand">
+          <a class="navbar-item brand-text" href="#paper-home">BiDexGrasp</a>
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="paper-navbar-menu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+        <div id="paper-navbar-menu" class="navbar-menu">
+          <div class="navbar-end">
+            <a class="navbar-item" href="#paper-video">Video</a>
+            <a class="navbar-item" href="#real-results">Real-World Results</a>
+            <a class="navbar-item" href="#abstract">Abstract</a>
+            <a class="navbar-item" href="#pipeline">Pipeline</a>
+            <a class="navbar-item" href="#method">Method</a>
+            <a class="navbar-item" href="#dataset">Dataset</a>
+            <a class="navbar-item" href="#bibtex">BibTeX</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="hero-body">
+    <div class="container has-text-centered hero-copy">
+      <h1 class="title publication-title hero-title">BiDexGrasp</h1>
+      <p class="subtitle hero-subtitle">Coordinated Bimanual Dexterous Grasps across Object Geometries and Sizes</p>
+      <p class="publication-venue hero-venue">
+        <span>CoRL 2026</span><span aria-hidden="true">&middot;</span><strong>Spotlight</strong>
+      </p>
+      <a class="hero-scroll" href="#paper-home" aria-label="Scroll to paper content">
+        <span>Scroll</span>
+        <i class="fas fa-angle-down"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="hero" id="paper-home">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">BiDexGrasp: Coordinated Bimanual Dexterous Grasps across Object Geometries and Sizes</h1>
+
+          <p class="publication-venue">
+            <span>CoRL 2026</span><span aria-hidden="true">&middot;</span><strong>Spotlight</strong>
+          </p>
+
+          <div class="is-size-5 publication-authors paper-author-list">
+            <span class="author-block"><a href="https://frenkielm.github.io/" target="_blank" rel="noopener noreferrer">Mu Lin</a><sup>1,*</sup>,</span>
+            <span class="author-block"><a href="https://wyl2077.github.io/" target="_blank" rel="noopener noreferrer">Yi-Lin Wei</a><sup>1,*</sup>,</span>
+            <span class="author-block">Jiaxuan Chen<sup>1</sup>,</span>
+            <span class="author-block"><a href="https://yuhaolincode.github.io/" target="_blank" rel="noopener noreferrer">Yuhao Lin</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://github.com/Rain-Shuoyu" target="_blank" rel="noopener noreferrer">Shuoyu Chen</a><sup>1</sup>,</span>
+            <span class="author-block">Zhizhao Liang<sup>1</sup>,</span>
+            <span class="author-block"><a href="https://jiangranlv.github.io/" target="_blank" rel="noopener noreferrer">Jiangran Lyu</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://jychen18.github.io/" target="_blank" rel="noopener noreferrer">Jiayi Chen</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=z2EohmgAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Xiaoyi Fan</a><sup>5</sup>,</span>
+            <span class="author-block"><a href="https://chengyi-xing.com/" target="_blank" rel="noopener noreferrer">Chengyi Xing</a><sup>4</sup>,</span>
+            <span class="author-block"><a href="https://andytang15.github.io/" target="_blank" rel="noopener noreferrer">Yansong Tang</a><sup>3</sup>,</span>
+            <span class="author-block"><a href="https://hughw19.github.io/" target="_blank" rel="noopener noreferrer">He Wang</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://www.isee-ai.cn/~zhwshi/" target="_blank" rel="noopener noreferrer">Wei-Shi Zheng</a><sup>1,†</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors publication-affiliations">
+            <span class="author-block"><sup>1</sup>Sun Yat-sen University</span>
+            <span class="author-block"><sup>2</sup>Peking University</span>
+            <span class="author-block"><sup>3</sup>Tsinghua University</span>
+            <span class="author-block"><sup>4</sup>Stanford University</span>
+            <span class="author-block"><sup>5</sup>Jiangxing Intelligence</span>
+          </div>
+
+          <div class="is-size-6 publication-authors contribution-note">* Equal contribution. † Corresponding author.</div>
+
+          <div class="column has-text-centered paper-links">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2604.06589" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener noreferrer">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>ArXiv</span>
+                </a>
+              </span>
+              <!-- <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark" aria-disabled="true" onclick="return false;">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark" aria-disabled="true" onclick="return false;">
+                  <span class="icon"><i class="fas fa-database"></i></span>
+                  <span>Dataset and Code(Coming soon)</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="paper-video">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Paper Video</h2>
+        <div class="video-card large-video-card">
+          <video controls autoplay muted playsinline preload="metadata" class="paper-video-element">
+            <source src="./media/overview/video.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="real-results">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Experimental Videos</h2>
+
+        <div class="video-category" id="single-view-point-clouds">
+          <h3 class="title is-4 video-category-title">Grasping from Single-View Point Clouds</h3>
+          <div class="columns is-multiline media-grid">
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/single-view-point-clouds/single-view-01.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/single-view-point-clouds/single-view-02.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/single-view-point-clouds/single-view-03.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/single-view-point-clouds/single-view-04.mp4" type="video/mp4"></video></div></div>
+          </div>
+        </div>
+
+        <div class="video-category" id="diverse-poses">
+          <h3 class="title is-4 video-category-title">Grasping with Diverse Poses</h3>
+          <div class="columns is-multiline media-grid">
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-poses/poses-01.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-poses/poses-02.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-poses/poses-03.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-poses/poses-04.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-poses/poses-05.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-poses/poses-06.mp4" type="video/mp4"></video></div></div>
+          </div>
+        </div>
+
+        <div class="video-category" id="diverse-geometry">
+          <h3 class="title is-4 video-category-title">Grasping Objects of Diverse Geometry</h3>
+          <div class="columns is-multiline media-grid">
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-geometry/geometry-01.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-geometry/geometry-02.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-geometry/geometry-03.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-geometry/geometry-04.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-geometry/geometry-05.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-geometry/geometry-06.mp4" type="video/mp4"></video></div></div>
+          </div>
+        </div>
+
+        <div class="video-category" id="diverse-size">
+          <h3 class="title is-4 video-category-title">Grasping Objects of Diverse Size</h3>
+          <div class="columns is-multiline media-grid">
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-size/size-01.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-size/size-02.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-size/size-03.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-half-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-size/size-04.mp4" type="video/mp4"></video></div></div>
+          </div>
+        </div>
+
+        <div class="video-category" id="diverse-embodiment">
+          <h3 class="title is-4 video-category-title">Grasping across Diverse Embodiments</h3>
+          <div class="columns is-multiline media-grid">
+            <div class="column is-one-third-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-embodiment/embodiment-02.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-one-third-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-embodiment/embodiment-03.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-one-third-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-embodiment/embodiment-05.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-one-third-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-embodiment/embodiment-07.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-one-third-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-embodiment/embodiment-09.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-one-third-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-embodiment/embodiment-10.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-one-third-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-embodiment/embodiment-11.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-one-third-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-embodiment/embodiment-12.mp4" type="video/mp4"></video></div></div>
+            <div class="column is-one-third-desktop is-half-tablet"><div class="video-card"><video controls autoplay muted playsinline preload="metadata" class="paper-video-element"><source src="./media/results/diverse-size/size-02.mp4" type="video/mp4"></video></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="abstract">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified abstract-copy">
+          <p>
+            Bimanual dexterous grasping is a fundamental and promising area in robotics, yet its progress is constrained by the lack of comprehensive datasets and powerful generation models. In this work, we propose BiDexGrasp, consists of a large-scale bimanual dexterous grasp dataset and a novel generation model. For dataset, we propose a novel bimanual grasp synthesis pipeline to efficiently annotate physically feasible data for dataset construction. This pipeline addresses the challenges of high-dimensional bimanual grasping through a two-stage synthesis strategy of efficient region-based grasp initialization and decoupled force-closure grasp optimization. Powered by this pipeline, we construct a large-scale bimanual dexterous grasp dataset, comprising 6351 diverse objects with sizes ranging from 30 to 80 cm, along with 9.7 million annotated grasp data. Based on this dataset, we further introduce a bimanual-coordinated and geometry-size-adaptive dexterous grasping generation framework. The framework lies in two key designs: a bimanual coordination module and a geometry-size-adaptive grasp generation strategy to generate coordinated and high-quality grasps on unseen objects. Extensive experiments conducted in both simulation and real world demonstrate the superior performance of our proposed data synthesis pipeline and learned generative framework.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pipeline">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Data Synthesis Pipeline</h2>
+        <div class="figure-card">
+          <img class="paper-figure" src="./media/figures/datapipeline.png" alt="Data Synthesis Pipeline">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="method">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Grasp Generation Method</h2>
+        <div class="figure-card">
+          <img class="paper-figure" src="./media/figures/methodfinal.png" alt="Grasp Generation Method">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="dataset">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Dataset Visualization</h2>
+        <div class="figure-card">
+          <img class="paper-figure" src="./media/figures/vis_dataset.png" alt="Dataset Visualization">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="bibtex">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">BibTeX</h2>
+        <pre><code>@misc{lin2026bidexgraspcoordinatedbimanualdexterous,
+  title={BiDexGrasp: Coordinated Bimanual Dexterous Grasps across Object Geometries and Sizes},
+  author={Mu Lin and Yi-Lin Wei and Jiaxuan Chen and Yuhao Lin and Shuoyu Chen and Jiangran Lyu and Jiayi Chen and Yansong Tang and He Wang and Wei-Shi Zheng},
+  year={2026},
+  eprint={2604.06589},
+  archivePrefix={arXiv},
+  primaryClass={cs.RO},
+  url={https://arxiv.org/abs/2604.06589},
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+          <p>
+            Website template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a> and <a href="https://hub-robot.github.io/">HuB</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
