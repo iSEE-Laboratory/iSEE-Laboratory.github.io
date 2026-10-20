@@ -1,6 +1,6 @@
 # Official institution marks
 
-The eight institution marks follow the paper affiliation order. Ainoro appears in the numbered text affiliations but has no logo, as requested. Files retain their original artwork and colors. All marks are served from the website’s bundled assets, and the displayed marks have no external navigation links.
+The nine institution marks follow the paper affiliation order. Ainoro appears in the numbered text affiliations but has no logo, as requested. Files retain their original artwork and colors. All marks are served from the website’s bundled assets, and the displayed marks have no external navigation links.
 
 ## Sun Yat-sen University
 - Official website: https://www.sysu.edu.cn/
@@ -36,6 +36,11 @@ The eight institution marks follow the paper affiliation order. Ainoro appears i
 - Official website: https://www.pcl.ac.cn/
 - Asset source: https://www.pcl.ac.cn/attachment/core/2022_11/18_09/4a16785fa2699e0d.png
 - Local asset: `pcl.png`
+
+## The Chinese University of Hong Kong Shenzhen
+- Official website: https://www.cuhk.edu.cn/en
+- Asset source: https://www.cuhk.edu.cn/sites/default/files/zh-hans_logo.png
+- Local asset: `cuhksz.png` (original 697 × 100 artwork)
 
 ## King Abdullah University of Science and Technology
 - Official website: https://www.kaust.edu.sa/en/
