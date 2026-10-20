@@ -235,7 +235,7 @@
     });
 
     const methods = {
-      overview: { title: 'A structured task state for world and action generation', description: 'Mode Tokens ground fine-grained task requirements. State Tokens track execution progress. Together, they steer generation toward the intended future.' },
+      overview: { title: '', description: '' },
       mode: { title: 'Mode Tokens: ground task requirements', description: 'Mode Tokens retrieve representations from a learnable codebook and ground them in the full instruction context. They encode fine-grained execution requirements, such as ordering, timing, repetition, and arm assignment, and remain available throughout execution.', rect: [54.5, 1.5, 44.5, 48.5] },
       state: { title: 'State Tokens: track execution progress', description: 'State Tokens aggregate executed actions, their observed outcomes, and visual changes. A causal temporal encoder processes these interactions in execution order, updating the progress representation as new robot–environment feedback arrives.', rect: [54.5, 55, 44.5, 44] },
       steer: { title: 'Future steering: condition world and action generation', description: 'The structured task state conditions both world and action streams through attention and modulation. Task-state-conditioned residual corrections further steer their predictions, while preserving the backbone’s native generation structure.', rect: [1, 1, 52, 79] }
@@ -243,6 +243,7 @@
     const selectMethod = (key) => {
       const method = methods[key];
       if (!method) return;
+      if (byId('method-copy')) byId('method-copy').hidden = key === 'overview';
       if (byId('method-title')) byId('method-title').textContent = method.title;
       if (byId('method-description')) byId('method-description').textContent = method.description;
       if (byId('method-figure')) byId('method-figure').dataset.view = key;
