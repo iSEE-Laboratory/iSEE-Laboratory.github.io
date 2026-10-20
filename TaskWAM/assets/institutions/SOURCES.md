@@ -1,6 +1,6 @@
 # Official institution marks
 
-The eight institution marks follow the paper affiliation order. Ainoro appears in the numbered text affiliations but has no logo, as requested. Files retain their original artwork and colors.
+The eight institution marks follow the paper affiliation order. Ainoro appears in the numbered text affiliations but has no logo, as requested. Files retain their original artwork and colors. All marks are served from the website’s bundled assets, and the displayed marks have no external navigation links.
 
 ## Sun Yat-sen University
 - Official website: https://www.sysu.edu.cn/
@@ -24,8 +24,8 @@ The eight institution marks follow the paper affiliation order. Ainoro appears i
 
 ## Southern University of Science and Technology
 - Official website: https://www.sustech.edu.cn/en/school_logo.html
-- Asset source: https://www.sustech.edu.cn/uploads/files/2022/07/14150332_92031.zip
-- Local asset: `sustech.png`
+- Asset source: https://www.sustech.edu.cn/uploads/logo1.png
+- Local asset: `sustech-seal.png` (original 190 × 189 university seal; displayed without cropping)
 
 ## Beijing Institute of Technology
 - Official website: https://www.bit.edu.cn/index.htm
