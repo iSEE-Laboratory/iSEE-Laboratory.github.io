@@ -23,7 +23,8 @@
       return mediaState.get(video);
     };
     const isVisible = (element) => {
-      if (!element || element.closest('[hidden]') || element.closest('dialog:not([open])')) return false;
+      if (!element || element.closest('[hidden]') || element.closest('dialog:not([open])')
+        || element.closest('details:not([open])')) return false;
       const rect = element.getBoundingClientRect();
       return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.top < window.innerHeight
         && rect.right > 0 && rect.left < window.innerWidth;
@@ -106,7 +107,8 @@
     if ('IntersectionObserver' in window) {
       const loadObserver = new IntersectionObserver((entries) => {
         entries.forEach(({ target, isIntersecting }) => {
-          if (isIntersecting && !target.closest('[hidden]') && !target.closest('dialog:not([open])')) ensureLoaded(target);
+          if (isIntersecting && !target.closest('[hidden]') && !target.closest('dialog:not([open])')
+            && !target.closest('details:not([open])')) ensureLoaded(target);
         });
       }, { rootMargin: '240px 0px' });
       const playbackObserver = new IntersectionObserver((entries) => {
@@ -134,6 +136,12 @@
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) $$('video').forEach(pauseVideo);
       else refreshPlayback();
+    });
+    $$('details').forEach((details) => {
+      details.addEventListener('toggle', () => {
+        if (!details.open) pauseWithin(details);
+        requestAnimationFrame(refreshPlayback);
+      });
     });
     const onMotionChange = () => {
       if (reducedMotion.matches) $$('video[data-autoplay]').forEach(pauseVideo);
@@ -197,6 +205,34 @@
       section.style.scrollMarginTop = `${Math.ceil(headerHeight + 24)}px`;
       section.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
     };
+    const header = $('.site-header');
+    let headerUpdateQueued = false;
+    const updateHeader = () => {
+      header?.classList.toggle('is-scrolled', window.scrollY > 40);
+      headerUpdateQueued = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (headerUpdateQueued) return;
+      headerUpdateQueued = true;
+      requestAnimationFrame(updateHeader);
+    }, { passive: true });
+    updateHeader();
+    $$('a[href^="#"]:not([data-full-demo])').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey
+          || event.shiftKey || event.altKey) return;
+        const hash = link.getAttribute('href');
+        const section = hash.length > 1 ? byId(hash.slice(1)) : null;
+        if (!section) return;
+        event.preventDefault();
+        scrollToSection(section);
+        if (window.location.hash !== hash) window.history.pushState(null, '', hash);
+        if (event.detail === 0) {
+          if (!section.hasAttribute('tabindex')) section.tabIndex = -1;
+          section.focus({ preventScroll: true });
+        }
+      });
+    });
 
     const methods = {
       overview: { title: 'A structured task state for world and action generation', description: 'Mode Tokens ground fine-grained task requirements. State Tokens track execution progress. Together, they steer generation toward the intended future.' },
@@ -409,35 +445,27 @@
       cutting: { title: 'Repeated bread cutting', description: 'Edited excerpt showing the first three cuts.', platform: 'Unitree G1 · Dexterous hands', speed: '2×' },
       fluid: { title: 'Fluid manipulation', description: 'TaskWAM pours into the receiving dish.', platform: 'AgileX Nero · 7-DoF dual arms', file: 'fluid-taskwam', speed: '2×' }
     };
-    const selectReal = (key) => {
+    $$('video[data-real-example]').forEach((video) => {
+      const key = video.dataset.realExample;
       const item = realExamples[key];
       if (!item) return;
-      const single = byId('real-single');
-      pauseWithin(single);
-      if (single) single.hidden = false;
-      if (byId('real-title')) byId('real-title').textContent = item.title;
-      if (byId('real-description')) byId('real-description').textContent = item.description;
-      if (byId('real-platform')) byId('real-platform').textContent = item.platform;
-      markSelected(embodimentButtons, embodimentButtons.find((button) => button.dataset.embodimentDemo === key));
-      if (byId('real-speed')) {
-        byId('real-speed').hidden = Boolean(item.baked);
-        byId('real-speed').textContent = item.speed || '';
+      const stopAtEnd = key === 'cutting';
+      video.dataset.stopAtEnd = String(stopAtEnd);
+      video.loop = !stopAtEnd;
+      const speedLabel = video.closest('.video-box')?.querySelector('.speed-label');
+      if (speedLabel) {
+        speedLabel.hidden = Boolean(item.baked);
+        speedLabel.textContent = item.speed || '';
       }
-      const file = item.file || key;
-      const video = byId('real-video');
-      if (video) video.dataset.stopAtEnd = String(key === 'cutting');
-      const revision = key === 'cutting' ? '?v=three-cut-excerpt' : '';
-      setVideo(video, `assets/${file}.mp4${revision}`, `assets/${file}.jpg${revision}`);
-      requestAnimationFrame(refreshPlayback);
-    };
-    const embodimentButtons = choices('[data-embodiment-demo]', 'data-embodiment-demo', (key) => {
-      selectReal(key);
-      scrollToSection(byId('real-showcase'));
-      const section = byId('real-single');
-      if (section) $$('video', section).forEach((video) => playVideo(video, true));
-      announce(`${realExamples[key]?.platform || 'Robot'}: ${realExamples[key]?.title || 'demonstration'} selected.`);
+      // Each robot keeps its own player and playback position as readers scroll.
+      // These files already contain the requested speed-up; playback stays at 1×.
+      if (!video.dataset.src && !video.getAttribute('src')) {
+        const file = item.file || key;
+        const revision = stopAtEnd ? '?v=three-cut-excerpt' : '';
+        video.dataset.src = `assets/${file}.mp4${revision}`;
+        if (!video.getAttribute('poster')) video.poster = `assets/${file}.jpg${revision}`;
+      }
     });
-    selectReal('toast');
 
     const openDialog = (dialog, trigger) => {
       if (!dialog) return;
