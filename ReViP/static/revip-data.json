@@ -1,0 +1,20 @@
+{
+  "source": "ReViP manuscript, Table IV, 2026-10-19 local PDF",
+  "columns": ["drop_butter", "drop_cheese", "drop_bottle", "drop_carton", "drop_bowl_cabinet", "swap_butter", "swap_cheese", "relayout_bowl", "fcsr", "sr"],
+  "methods": [
+    {"name":"OpenVLA","family":"VLA","values":[12,30,16,6,2,0,0,12,10,9]},
+    {"name":"π₀-Fast","family":"VLA","values":[28,62,20,16,58,18,32,84,40,37]},
+    {"name":"UniVLA","family":"VLA","values":[18,40,16,10,6,4,12,20,16,14]},
+    {"name":"Evo-1","family":"VLA","values":[26,80,38,34,22,8,14,60,35,35]},
+    {"name":"StarVLA","family":"VLA","values":[28,84,42,50,24,24,40,2,37,36]},
+    {"name":"π₀ + AHA","family":"External VLM / agent","values":[38,80,38,74,28,8,24,74,46,43]},
+    {"name":"π₀ + VoLoAgent","family":"External VLM / agent","values":[38,90,38,72,24,22,52,38,47,45]},
+    {"name":"π₀ + HarnessVLA","family":"External VLM / agent","values":[48,90,34,70,36,14,28,76,50,49]},
+    {"name":"π₀","family":"Flow matching","values":[24,78,26,40,20,6,24,70,36,35]},
+    {"name":"π₀ + ReViP","family":"Flow matching","ours":true,"values":[48,92,72,74,52,30,44,88,63,62]},
+    {"name":"OpenVLA-OFT","family":"Autoregressive","values":[16,42,18,12,34,2,10,18,19,18]},
+    {"name":"OpenVLA-OFT + ReViP","family":"Autoregressive","ours":true,"values":[30,74,52,38,44,14,28,48,41,38]},
+    {"name":"GR00T N1.5","family":"Dual system","values":[22,54,18,22,38,6,20,34,27,24]},
+    {"name":"GR00T N1.5 + ReViP","family":"Dual system","ours":true,"values":[28,70,46,38,42,20,48,58,44,41]}
+  ]
+}
