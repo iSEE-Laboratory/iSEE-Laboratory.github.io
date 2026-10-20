@@ -1,6 +1,6 @@
 # Official institution marks
 
-Affiliation order follows the paper; Ainoro is omitted at the authors’ request. Files retain their original artwork and colors.
+The eight institution marks follow the paper affiliation order. Ainoro appears in the numbered text affiliations but has no logo, as requested. Files retain their original artwork and colors.
 
 ## Sun Yat-sen University
 - Official website: https://www.sysu.edu.cn/
@@ -41,8 +41,3 @@ Affiliation order follows the paper; Ainoro is omitted at the authors’ request
 - Official website: https://www.kaust.edu.sa/en/
 - Asset source: https://www.kaust.edu.sa/ResourcePackages/KAUSTMain/assets/dist/images/kaust-logo.svg
 - Local asset: `kaust.svg`
-
-## Baidu
-- Official website: https://home.baidu.com/
-- Asset source: https://home.baidu.com/Public/img/logo.png?v=15
-- Local asset: `baidu.png`
