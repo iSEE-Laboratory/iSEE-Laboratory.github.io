@@ -442,7 +442,7 @@
       toast: { title: 'Bread toasting & spreading', description: 'Follow the breakfast routine from loading and heating bread to retrieval and spreading.', platform: 'AgileX Piper · 6-DoF dual arms', speed: '2×', baked: true },
       nesting: { title: 'Ordered cup nesting', description: 'TaskWAM follows the required cup sequence in a real-world manipulation example.', platform: 'Franka Research 3 · Single arm', speed: '4×' },
       spreading: { title: 'Bread retrieval and spreading', description: 'Maintain execution progress through the bread retrieval stage.', platform: 'AgileX Piper · 6-DoF dual arms', speed: '2.5×' },
-      cutting: { title: 'Repeated bread cutting', description: 'Edited excerpt showing the first three cuts.', platform: 'Unitree G1 · Dexterous hands', speed: '2×' },
+      cutting: { title: 'Repeated bread cutting', description: 'Three consecutive cuts with dexterous hands.', platform: 'Unitree G1 · Dexterous hands', speed: '2×' },
       fluid: { title: 'Fluid manipulation', description: 'TaskWAM pours into the receiving dish.', platform: 'AgileX Nero · 7-DoF dual arms', file: 'fluid-taskwam', speed: '2×' }
     };
     $$('video[data-real-example]').forEach((video) => {
@@ -461,7 +461,7 @@
       // These files already contain the requested speed-up; playback stays at 1×.
       if (!video.dataset.src && !video.getAttribute('src')) {
         const file = item.file || key;
-        const revision = stopAtEnd ? '?v=three-cut-excerpt' : '';
+        const revision = stopAtEnd ? '?v=three-cut-clean' : '';
         video.dataset.src = `assets/${file}.mp4${revision}`;
         if (!video.getAttribute('poster')) video.poster = `assets/${file}.jpg${revision}`;
       }
@@ -503,7 +503,7 @@
       scrollToSection(section);
       playVideo(video, true);
     }));
-    $$('[data-open-figure]').forEach((button) => button.addEventListener('click', () => openDialog(byId('figure-dialog'), button)));
+    $$('[data-open-figure]').forEach((button) => button.addEventListener('click', () => openDialog(byId(button.dataset.openFigure || 'figure-dialog'), button)));
     $$('[data-close-dialog]').forEach((button) => button.addEventListener('click', () => closeDialog(button.closest('dialog') || activeDialog)));
     $$('dialog').forEach((dialog) => {
       dialog.addEventListener('close', () => dialogClosed(dialog));
